@@ -61,6 +61,7 @@
       url: dataURL,
       success: function( content ) {
         cj('#instance_data').show( ).html( content );
+        cj('.crm-report_setting-accordion').remove();
       }
     });
   });
