@@ -70,12 +70,13 @@
     cj('#instance_data').show( ).html( content );
     cj('.crm-report_setting-accordion').remove();
     cj('.crm-report_criteria-accordion').removeClass('collapsed');
-    cj('#_qf_LoggingSummary_submit').prop('type', 'button');
-    cj('#_qf_LoggingSummary_submit').click(function(event) {
+    var form = cj('#instance_data').find('form');
+    cj('input[type="submit"][value="Preview Report"]').prop('type', 'button');
+    cj('input[type="button"][value="Preview Report"]').click(function(event) {
          cj.ajax( {
               type: "POST",
               url: dataURL,
-              data:cj('#LoggingSummary').serialize(),
+              data:form.serialize(),
               success: function( response ) {
                    commonChanges(dataURL, response);
                   }
