@@ -175,7 +175,8 @@ class CRM_Logging_ReportSummary extends CRM_Report_Form {
     }
 
     // temp table to hold all altered contact-ids
-
+    $query = "DROP TEMPORARY TABLE IF EXISTS civicrm_temp_civireport_logsummary";
+    CRM_Core_DAO::executeQuery($query);
     $sql = "CREATE TEMPORARY TABLE civicrm_temp_civireport_logsummary ( {$tempColumns} ) ENGINE=HEAP";
     CRM_Core_DAO::executeQuery($sql);
 

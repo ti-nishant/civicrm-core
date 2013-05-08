@@ -60,11 +60,29 @@
     cj.ajax({
       url: dataURL,
       success: function( content ) {    
-          cj('#instance_data').show( ).html( content );
+          commonChanges(dataURL, content);
       }
     });
 
   });
+  
+  function commonChanges(dataURL, content){
+    cj('#instance_data').show( ).html( content );
+    cj('.crm-report_setting-accordion').remove();
+    cj('.crm-report_criteria-accordion').removeClass('collapsed');
+    var form = cj('#instance_data').find('form');
+    cj('input[type="submit"][value="Preview Report"]').prop('type', 'button');
+    cj('input[type="button"][value="Preview Report"]').click(function(event) {
+         cj.ajax( {
+              type: "POST",
+              url: dataURL,
+              data:form.serialize(),
+              success: function( response ) {
+                   commonChanges(dataURL, response);
+                  }
+             });
+         });
+  }
 
   cj('div#changeLog div#instance_data .report-pager .crm-pager-nav a').live("click", function(e) {
     cj.ajax({
