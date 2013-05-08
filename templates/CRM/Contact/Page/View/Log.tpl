@@ -90,7 +90,6 @@
       url: this.href + '&snippet=5',
       success: function( content ) {
         commonChanges(dataURL, content);
-        //cj('div#changeLog div#instance_data').html(content);
       }
     });
     return false;
@@ -101,7 +100,6 @@
     cj.ajax({
       url: cj('div#changeLog div#instance_data .report-pager .crm-pager-nav a:first').attr('href') + '&snippet=5&crmPID=' + crmpid,
       success: function( content ) {
-        //cj('div#changeLog div#instance_data').html(content);
         commonChanges(dataURL, content);
       }
     });
