@@ -27,6 +27,7 @@
    <p></p>
    <div class="bold">{ts}Change Log:{/ts} {$displayName}</div>
    {if $useLogging}
+       <input id='ajxbt' type='button' value='click' />
      <br />
      <div class='hiddenElement' id='instance_data'> </div>
    {else}
@@ -62,8 +63,24 @@
       success: function( content ) {
         cj('#instance_data').show( ).html( content );
         cj('.crm-report_setting-accordion').remove();
+        cj('.crm-report_criteria-accordion').removeClass('collapsed');
+        //cj('#instance_data').append("<input id='ajxbt' type='button' value='click' />");
       }
     });
+    
+    
+    cj('#ajxbt').click( function() {
+       cj.ajax( {
+         type: "POST",
+         url: dataURL,
+         data:cj('#LoggingSummary').serialize(),
+         success: function( response ) {
+              cj('#instance_data').show( ).html( response);
+              cj('.crm-report_setting-accordion').remove();
+              cj('.crm-report_criteria-accordion').removeClass('collapsed');
+         }
+        });
+     });
   });
 
   cj('div#changeLog div#instance_data .report-pager .crm-pager-nav a').live("click", function(e) {
