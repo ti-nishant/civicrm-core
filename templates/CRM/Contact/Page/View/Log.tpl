@@ -55,6 +55,7 @@
 {if $useLogging}
 {literal}
   <script type="text/javascript">
+  var dataURL = {/literal}"{$instanceUrl}"{literal};
   cj( document ).ready( function ( ) {
     var dataURL = {/literal}"{$instanceUrl}"{literal};
     cj.ajax({
@@ -86,9 +87,10 @@
 
   cj('div#changeLog div#instance_data .report-pager .crm-pager-nav a').live("click", function(e) {
     cj.ajax({
-      url: this.href + '&snippet=4&section=2',
+      url: this.href + '&snippet=5',
       success: function( content ) {
-        cj('div#changeLog div#instance_data').html(content);
+        commonChanges(dataURL, content);
+        //cj('div#changeLog div#instance_data').html(content);
       }
     });
     return false;
@@ -97,9 +99,10 @@
   cj('input[name="PagerBottomButton"], input[name="PagerTopButton"]').live("click", function(e) {
     var crmpid  = (this.name == 'PagerBottomButton') ? cj('input[name="crmPID_B"]').val() : cj('input[name="crmPID"]').val();
     cj.ajax({
-      url: cj('div#changeLog div#instance_data .report-pager .crm-pager-nav a:first').attr('href') + '&snippet=4&section=2&crmPID=' + crmpid,
+      url: cj('div#changeLog div#instance_data .report-pager .crm-pager-nav a:first').attr('href') + '&snippet=5&crmPID=' + crmpid,
       success: function( content ) {
-        cj('div#changeLog div#instance_data').html(content);
+        //cj('div#changeLog div#instance_data').html(content);
+        commonChanges(dataURL, content);
       }
     });
     return false;
