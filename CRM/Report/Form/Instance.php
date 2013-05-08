@@ -2,30 +2,30 @@
 // $Id$
 
 /*
-  +--------------------------------------------------------------------+
-  | CiviCRM version 4.3                                                |
-  +--------------------------------------------------------------------+
-  | Copyright CiviCRM LLC (c) 2004-2013                                |
-  +--------------------------------------------------------------------+
-  | This file is a part of CiviCRM.                                    |
-  |                                                                    |
-  | CiviCRM is free software; you can copy, modify, and distribute it  |
-  | under the terms of the GNU Affero General Public License           |
-  | Version 3, 19 November 2007 and the CiviCRM Licensing Exception.   |
-  |                                                                    |
-  | CiviCRM is distributed in the hope that it will be useful, but     |
-  | WITHOUT ANY WARRANTY; without even the implied warranty of         |
-  | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
-  | See the GNU Affero General Public License for more details.        |
-  |                                                                    |
-  | You should have received a copy of the GNU Affero General Public   |
-  | License and the CiviCRM Licensing Exception along                  |
-  | with this program; if not, contact CiviCRM LLC                     |
-  | at info[AT]civicrm[DOT]org. If you have questions about the        |
-  | GNU Affero General Public License or the licensing of CiviCRM,     |
-  | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
-  +--------------------------------------------------------------------+
- */
+ +--------------------------------------------------------------------+
+ | CiviCRM version 4.3                                                |
+ +--------------------------------------------------------------------+
+ | Copyright CiviCRM LLC (c) 2004-2013                                |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM.                                    |
+ |                                                                    |
+ | CiviCRM is free software; you can copy, modify, and distribute it  |
+ | under the terms of the GNU Affero General Public License           |
+ | Version 3, 19 November 2007 and the CiviCRM Licensing Exception.   |
+ |                                                                    |
+ | CiviCRM is distributed in the hope that it will be useful, but     |
+ | WITHOUT ANY WARRANTY; without even the implied warranty of         |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License and the CiviCRM Licensing Exception along                  |
+ | with this program; if not, contact CiviCRM LLC                     |
+ | at info[AT]civicrm[DOT]org. If you have questions about the        |
+ | GNU Affero General Public License or the licensing of CiviCRM,     |
+ | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
+ +--------------------------------------------------------------------+
+*/
 
 /**
  *
@@ -46,34 +46,57 @@ class CRM_Report_Form_Instance {
     $instanceID = $form->getVar('_id');
     if ($instanceID && !CRM_Report_Utils_Report::isInstanceGroupRoleAllowed($instanceID)) {
       $url = CRM_Utils_System::url('civicrm/report/list', 'reset=1');
-      CRM_Core_Error::statusBounce(ts('You do not have permission to access this report.'), $url
+      CRM_Core_Error::statusBounce(ts('You do not have permission to access this report.'),
+        $url
       );
     }
 
     $attributes = CRM_Core_DAO::getAttribute('CRM_Report_DAO_Instance');
 
-    $form->add('text', 'title', ts('Report Title'), $attributes['title']
+    $form->add('text',
+      'title',
+      ts('Report Title'),
+      $attributes['title']
     );
 
-    $form->add('text', 'description', ts('Report Description'), $attributes['description']
+    $form->add('text',
+      'description',
+      ts('Report Description'),
+      $attributes['description']
     );
 
-    $form->add('text', 'email_subject', ts('Subject'), $attributes['email_subject']
+    $form->add('text',
+      'email_subject',
+      ts('Subject'),
+      $attributes['email_subject']
     );
 
-    $form->add('text', 'email_to', ts('To'), $attributes['email_to']
+    $form->add('text',
+      'email_to',
+      ts('To'),
+      $attributes['email_to']
     );
 
-    $form->add('text', 'email_cc', ts('CC'), $attributes['email_subject']
+    $form->add('text',
+      'email_cc',
+      ts('CC'),
+      $attributes['email_subject']
     );
 
-    $form->add('textarea', 'report_header', ts('Report Header'), $attributes['header']
+    $form->add('textarea',
+      'report_header',
+      ts('Report Header'),
+      $attributes['header']
     );
 
-    $form->add('textarea', 'report_footer', ts('Report Footer'), $attributes['footer']
+    $form->add('textarea',
+      'report_footer',
+      ts('Report Footer'),
+      $attributes['footer']
     );
 
-    $form->addElement('checkbox', 'is_navigation', ts('Include Report in Navigation Menu?'), NULL, array('onclick' => "return showHideByValue('is_navigation','','navigation_menu','table-row','radio',false);")
+    $form->addElement('checkbox', 'is_navigation', ts('Include Report in Navigation Menu?'), NULL,
+      array('onclick' => "return showHideByValue('is_navigation','','navigation_menu','table-row','radio',false);")
     );
 
     $form->addElement('checkbox', 'addToDashboard', ts('Available for Dashboard?'));
@@ -84,9 +107,12 @@ class CRM_Report_Form_Instance {
 
     $config = CRM_Core_Config::singleton();
     if ($config->userFramework != 'Joomla' ||
-        $config->userFramework != 'WordPress'
+      $config->userFramework != 'WordPress'
     ) {
-      $form->addElement('select', 'permission', ts('Permission'), array('0' => ts('Everyone (includes anonymous)')) + CRM_Core_Permission::basicPermissions()
+      $form->addElement('select',
+        'permission',
+        ts('Permission'),
+        array('0' => ts('Everyone (includes anonymous)')) + CRM_Core_Permission::basicPermissions()
       );
 
       // prepare user_roles to save as names not as ids
@@ -95,11 +121,15 @@ class CRM_Report_Form_Instance {
         foreach ($user_roles_array as $key => $value) {
           $user_roles[$value] = $value;
         }
-        $grouprole = &$form->addElement('advmultiselect', 'grouprole', ts('ACL Group/Role'), $user_roles, array(
-              'size' => 5,
-              'style' => 'width:240px',
-              'class' => 'advmultiselect',
-                )
+        $grouprole = &$form->addElement('advmultiselect',
+          'grouprole',
+          ts('ACL Group/Role'),
+          $user_roles,
+          array(
+            'size' => 5,
+            'style' => 'width:240px',
+            'class' => 'advmultiselect',
+          )
         );
         $grouprole->setButtonAttributes('add', array('value' => ts('Add >>')));
         $grouprole->setButtonAttributes('remove', array('value' => ts('<< Remove')));
@@ -120,16 +150,16 @@ class CRM_Report_Form_Instance {
     }
 
     $form->addButtons(array(
-      array(
-        'type' => 'submit',
-        'name' => ts('Save Report'),
-        'isDefault' => TRUE,
-      ),
-      array(
-        'type' => 'cancel',
-        'name' => ts('Cancel'),
-      ),
-        )
+        array(
+          'type' => 'submit',
+          'name' => ts('Save Report'),
+          'isDefault' => TRUE,
+        ),
+        array(
+          'type' => 'cancel',
+          'name' => ts('Cancel'),
+        ),
+      )
     );
 
     $form->addFormRule(array('CRM_Report_Form_Instance', 'formRule'), $form);
@@ -159,9 +189,9 @@ class CRM_Report_Form_Instance {
     $instanceID = $form->getVar('_id');
     $navigationDefaults = array();
 
-    if (!isset($defaults['permission'])) {
-      $permissions = array_flip(CRM_Core_Permission::basicPermissions());
-      $defaults['permission'] = $permissions['CiviReport: access CiviReport'];
+    if (!isset($defaults['permission'])){
+    $permissions = array_flip(CRM_Core_Permission::basicPermissions( ));
+    $defaults['permission'] = $permissions['CiviReport: access CiviReport'];
     }
 
     $config = CRM_Core_Config::singleton();
@@ -213,17 +243,17 @@ class CRM_Report_Form_Instance {
   }
 
   static function postProcess(&$form, $redirect = TRUE) {
-    $params = $form->getVar('_params');
-    $config = CRM_Core_Config::singleton();
-    $params['header'] = CRM_Utils_Array::value('report_header', $params);
-    $params['footer'] = CRM_Utils_Array::value('report_footer', $params);
+    $params              = $form->getVar('_params');
+    $config              = CRM_Core_Config::singleton();
+    $params['header']    = CRM_Utils_Array::value('report_header',$params);
+    $params['footer']    = CRM_Utils_Array::value('report_footer',$params);
     $params['domain_id'] = CRM_Core_Config::domainID();
 
     //navigation parameters
     if (CRM_Utils_Array::value('is_navigation', $params)) {
       $form->_navigation['permission'] = array();
       $form->_navigation['label'] = $params['title'];
-      $form->_navigation['name'] = $params['title'];
+      $form->_navigation['name']  = $params['title'];
 
       $permission = CRM_Utils_Array::value('permission', $params);
 
@@ -246,7 +276,8 @@ class CRM_Report_Form_Instance {
       foreach ($params['grouprole'] as $key => $value) {
         $grouprole_array[$value] = $value;
       }
-      $params['grouprole'] = implode(CRM_Core_DAO::VALUE_SEPARATOR, array_keys($grouprole_array)
+      $params['grouprole'] = implode(CRM_Core_DAO::VALUE_SEPARATOR,
+        array_keys($grouprole_array)
       );
     }
 
@@ -290,13 +321,12 @@ class CRM_Report_Form_Instance {
     $instanceID = $form->getVar('_id');
     $isNew = $form->getVar('_createNew');
     $isCopy = 0;
-
+    
     if ($instanceID) {
       if (!$isNew) {
         // updating an existing report instance
-        $dao->id = $instanceID;
-      }
-      else {
+        $dao->id = $instanceID;        
+      } else {
         // making a copy of an existing instance
         $isCopy = 1;
       }
@@ -343,15 +373,18 @@ class CRM_Report_Form_Instance {
       CRM_Core_BAO_Dashboard::addDashlet($dashletParams);
     }
 
-    $instanceParams = array('value' => $dao->report_id);
+    $instanceParams   = array('value' => $dao->report_id);
     $instanceDefaults = array();
-    $cmpName = "Contact";
-    $statusMsg = "null";
-    CRM_Core_DAO::commonRetrieve('CRM_Core_DAO_OptionValue', $instanceParams, $instanceDefaults
+    $cmpName          = "Contact";
+    $statusMsg        = "null";
+    CRM_Core_DAO::commonRetrieve('CRM_Core_DAO_OptionValue',
+      $instanceParams,
+      $instanceDefaults
     );
 
     if ($cmpID = CRM_Utils_Array::value('component_id', $instanceDefaults)) {
-      $cmpName = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_Component', $cmpID, 'name', 'id'
+      $cmpName = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_Component', $cmpID,
+        'name', 'id'
       );
       $cmpName = substr($cmpName, 4);
     }
@@ -359,23 +392,21 @@ class CRM_Report_Form_Instance {
     if ($instanceID && !$isNew) {
       // updating existing instance
       $statusMsg = ts('"%1" report has been updated.', array(1 => $dao->title));
-    }
-    elseif ($isCopy) {
+    } elseif ($isCopy) {
       $statusMsg = ts('Your report has been successfully copied as "%1". You are currently viewing the new copy.', array(1 => $dao->title));
-    }
-    else {
+    } else {
       $statusMsg = ts('"%1" report has been successfully created. You are currently viewing the new report instance.', array(1 => $dao->title));
     }
 
-    $instanceUrl = CRM_Utils_System::url("civicrm/report/instance/{$dao->id}", "reset=1"
+    $instanceUrl = CRM_Utils_System::url("civicrm/report/instance/{$dao->id}",
+      "reset=1"
     );
-
+          
     CRM_Core_Session::setStatus($statusMsg);
 
-    if ($redirect) {
+    if ( $redirect ) {
       CRM_Utils_System::redirect($instanceUrl);
     }
   }
-
 }
 
