@@ -1968,6 +1968,17 @@ class CRM_Import_Parser_Contact extends CRM_Import_Parser {
             }
           }
           break;
+        case 'Radio':
+          if ( CRM_Utils_Array::value( $key, $formatted ) && CRM_Utils_Array::value( $key, $params ) ) {
+            $customOption = CRM_Core_BAO_CustomOption::getCustomOption($customFieldID, true);
+            foreach ($customOption as $v2) {
+              if (strtolower($v2['label']) == strtolower($formatted[$key])) {
+                $params[$key] = $formatted[$key] = $v2['value'];
+                break;
+              }
+            }
+            break;
+          }
         }
       }
     }
