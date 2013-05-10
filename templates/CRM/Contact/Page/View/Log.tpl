@@ -71,6 +71,9 @@
     cj('#instance_data').show( ).html( content );
     cj('.crm-report_setting-accordion').remove();
     cj('.crm-report_criteria-accordion').removeClass('collapsed');
+    if(cj('tr.report-contents:has(td:contains("Altered Contact"))').length){
+        cj('tr.report-contents:has(td:contains("Altered Contact"))').remove();
+    }
     var form = cj('#instance_data').find('form');
     cj('input[type="submit"][value="Preview Report"]').prop('type', 'button');
     cj('input[type="button"][value="Preview Report"]').click(function(event) {
